@@ -11,13 +11,16 @@
         $result=$conn->query($checkUser);
         if($result->num_rows>0){
             echo "<script>alert('El usuario ya existe')</script>";
+            print("Ya existe");
         }else{
             $insertQuery="Insert into pacientes(nombre,telefono,edad,password) values('$usuario','$telefono','$edad','$password')";
             if($conn->query($insertQuery)===TRUE){
                 echo "<script>alert('Usuario registrado')</script>";
+                print("Registrado");
                 header("Location: index.php");
             }else{
                 echo "<script>alert('Error al registrar')</script>";
+                print("Error al registrar");
                 echo $conn->error;
             }
         }
