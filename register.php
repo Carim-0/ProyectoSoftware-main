@@ -13,7 +13,7 @@
             echo "<script>alert('El usuario ya existe')</script>";
             print("Ya existe");
         }else{
-            $insertQuery="Insert into Pacientes(nombre,telefono,edad,password) values('$usuario','$telefono','$edad','$password')";
+            $insertQuery="Insert into Pacientes(nombre,telefono,edad,password) values('$usuario','$telefono',$edad,'$password')";
             if($conn->query($insertQuery)===TRUE){
                 echo "<script>alert('Usuario registrado')</script>";
                 print("Registrado");
