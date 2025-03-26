@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container" id="login" >
-        <h1 class="form_title">Iniciar sesion</h1>
+        <h1 class="form_title">RejuveMed - Iniciar sesion</h1>
         <form method="post" action="">
             <div class="input-group">
                 <i class="fas fa-user"></i>
