@@ -2,16 +2,30 @@
     include 'connect.php';
 
     if(isset($_POST['registerButton2'])){
-        $usuario=$_POST['usuario'];
-        $password=$_POST['password'];
-        $telefono=$_POST['telefono'];
-        $edad=$_POST['edad'];
+        $usuario = $_POST['usuario'] ?? null;
+        $password = $_POST['password'] ?? null;
+        $telefono = $_POST['telefono'] ?? null;
+        $edad = $_POST['edad'] ?? null;
 
-            $insertQuery="Insert into Pacientes(nombre,telefono,edad,password) values('$usuario','$telefono',$edad,'$password')";
-            if($conn->query($insertQuery)===TRUE){
+        // Validate input
+        if (!$usuario || !$password || !$telefono || !$edad) {
+            echo "<script>alert('Todos los campos son obligatorios.')</script>";
+            exit;
+        }
+
+        // Use prepared statements to prevent SQL injection
+        $insertQuery = $conn->prepare("INSERT INTO Pacientes (nombre, telefono, edad, password) VALUES (?, ?, ?, ?)");
+        if ($insertQuery) {
+            $insertQuery->bind_param("ssis", $usuario, $telefono, $edad, $password);
+            if ($insertQuery->execute()) {
                 echo "<script>alert('Usuario registrado')</script>";
                 print("Registrado");
-                
+            } else {
+                echo "<script>alert('Error al registrar usuario: " . $insertQuery->error . "')</script>";
             }
-}
+            $insertQuery->close();
+        } else {
+            echo "<script>alert('Error al preparar la consulta: " . $conn->error . "')</script>";
+        }
+    }
 ?>
